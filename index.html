@@ -4,141 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Throttle-Curve Calc</title>
-    <style>
-        :root {
-            --primary-color: #007bff;
-            --background-color: #f4f4f4;
-            --text-color: #333;
-            --max-width: 360px;
-        }
+<style>
+    :root {
+        --primary-color: #007bff;
+        --background-color: #f4f4f4;
+        --text-color: #333;
+        --max-width: 360px;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-			min-width: 0;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
 
-        .container {
-            max-width: var(--max-width);
-            width: 100%;
-            box-sizing: border-box;
-            text-align: center;
-        }
+    .container {
+        max-width: var(--max-width);
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
 
-        .inputs {
-            margin-bottom: 20px;
-            width: 100%;
-        }
+    .inputs {
+        margin-bottom: 20px;
+        width: 100%;
+    }
 
+    .input-pair {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        min-width: 0;
+    }
+
+    .input-pair label {
+        flex: 1;
+        text-align: left;
+        font-size: 0.9rem;
+        min-width: 0;
+    }
+
+    .input-pair input {
+        text-align: right;
+        padding: 8px;
+        width: 70px;
+        box-sizing: border-box;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .input-pair .percentage {
+        width: 50px;
+        text-align: right;
+        font-size: 1rem;
+        padding-left: 10px;
+    }
+
+    .table-container {
+        text-align: center;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    table {
+        border-collapse: collapse;
+        margin-top: 10px;
+        width: 100%;
+        max-width: var(--max-width);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    canvas {
+        max-width: 100%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    footer {
+        margin-top: 20px;
+        font-size: 0.9rem;
+    }
+
+    footer a {
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
         .input-pair {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-			min-width: 0;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .input-pair label {
-            flex: 1;
+            margin-bottom: 5px;
             text-align: left;
-            font-size: 0.9rem;
-			min-width: 0;
         }
 
         .input-pair input {
-            text-align: right;
-            padding: 8px;
-            width: 70px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            text-align: left;
         }
 
         .input-pair .percentage {
-            width: 50px;
-            text-align: right;
-            font-size: 1rem;
-            padding-left: 10px;
+            text-align: left;
+            padding-left: 0;
         }
+    }
+</style>
 
-        .table-container {
-            text-align: center;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        table {
-            border-collapse: collapse;
-            margin-top: 10px;
-            width: 100%;
-            max-width: var(--max-width);
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        canvas {
-            max-width: 100%;
-            height: auto;
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
-        }
-
-        footer {
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-
-        footer a {
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 600px) {
-            .input-pair {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .input-pair label {
-                margin-bottom: 5px;
-                text-align: left;
-            }
-
-            .input-pair input {
-                text-align: left;
-            }
-
-            .input-pair .percentage {
-                text-align: left;
-                padding-left: 0;
-            }
-        }
-    </style>
 </head>
 <body>
 
