@@ -13,30 +13,32 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0; /* Ändern Sie dies von 20px zu 0, um sicherzustellen, dass das Layout korrekt zentriert ist */
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
 
-        .container {
-            max-width: var(--max-width);
-            width: 100%;
-			align-items: center;
-            box-sizing: border-box;
-            text-align: center;
-        }
+.container {
+    max-width: var(--max-width);
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 20px; /* Verschieben Sie das Padding hierhin, falls nötig */
+}
 
         .inputs {
-            margin-bottom: 20px;
-			align-items: center;
-            width: 100%;
+            display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
         }
 
         .input-pair {
@@ -70,9 +72,12 @@
         }
 
         .table-container {
-            text-align: center;
-            margin-bottom: 20px;
-            width: 100%;
+            display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
         }
 
         table {
@@ -118,25 +123,24 @@
         }
 
         @media (max-width: 600px) {
-            .input-pair {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+    body {
+        padding: 0; /* Reduzieren Sie das Padding für kleine Bildschirme */
+    }
 
-            .input-pair label {
-                margin-bottom: 5px;
-                text-align: left;
-            }
+    .container {
+        padding: 10px; /* Reduzieren Sie das Padding in der Containerklasse */
+    }
 
-            .input-pair input {
-                text-align: left;
-            }
+    .input-pair {
+        flex-direction: column;
+        align-items: center; /* Stellen Sie sicher, dass die Eingabepaar-Elemente zentriert sind */
+    }
 
-            .input-pair .percentage {
-                text-align: left;
-                padding-left: 0;
-            }
-        }
+    .input-pair label, .input-pair input, .input-pair .percentage {
+        width: 100%;
+        text-align: center;
+    }
+}
     </style>
 </head>
 <body>
