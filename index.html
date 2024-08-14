@@ -98,7 +98,7 @@
     }
 
     th {
-        background-color: #f2f2f2;
+        background-color: #c1c1c1;
     }
 
     canvas {
@@ -289,41 +289,65 @@ document.getElementById('input2').addEventListener('input', updateCurve);
 
 
     const ctx = document.getElementById('curveChart').getContext('2d');
-    const curveChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: [-100, -80, -60, -40, -20, 0, 20, 40, 60, 80, 100],
-            datasets: [{
-                label: 'Throttle Curve',
-                data: [-100, -67, -40, -17, 4, 23, 40, 56, 72, 86, 100],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 2,
-                pointRadius: 4,
-                fill: false,
-                tension: 0.4
-            }]
+const chartAreaBackground = {
+    id: 'chartAreaBackground',
+    beforeDraw: (chart) => {
+        const ctx = chart.ctx;
+        const chartArea = chart.chartArea;
+
+        ctx.save();
+        ctx.fillStyle = 'rgba(193, 193, 193, 1)'; // Hier wird die Farbe für den Diagrammbereich gesetzt
+        ctx.fillRect(chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+        ctx.restore();
+    }
+};
+
+// Fügen Sie das Plugin zum Diagramm hinzu
+const curveChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [-100, -80, -60, -40, -20, 0, 20, 40, 60, 80, 100],
+        datasets: [{
+            label: 'Throttle Curve',
+            data: [-100, -67, -40, -17, 4, 23, 40, 56, 72, 86, 100],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 2,
+            pointRadius: 2,
+            fill: false,
+            tension: 0.4
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+            },
+            chartAreaBackground: {
+                color: 'rgba(193, 193, 193, 1)'
+            }
         },
-        options: {
-            plugins: {
-                legend: {
-                    display: false
+        scales: {
+            x: {
+                beginAtZero: false,
+                min: -100,
+                max: 100,
+                grid: {
+                    color: 'rgba(255, 255, 255, 0.2)' // Farbe der Gitterlinien
                 }
             },
-            scales: {
-                x: {
-                    beginAtZero: false,
-                    min: -100,
-                    max: 100
-                },
-                y: {
-                    beginAtZero: false,
-                    min: -100,
-                    max: 100
+            y: {
+                beginAtZero: false,
+                min: -100,
+                max: 100,
+                grid: {
+                    color: 'rgba(255, 255, 255, 0.2)' // Farbe der Gitterlinien
                 }
             }
         }
-    });
+    },
+    plugins: [chartAreaBackground] // Plugin aktivieren
+});
 </script>
 
 </body>
