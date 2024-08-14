@@ -23,14 +23,14 @@
     padding: 20px;
     background-color: var(--background-color);
     color: var(--text-color);
-    text-align: center; /* Added to ensure text is centered */
+    text-align: center;
 }
 
 .container {
-    width: 100%; /* Ensure full use of the container width */
+    width: 100%;
     max-width: var(--max-width);
     box-sizing: border-box;
-    text-align: center; /* Center the content */
+    text-align: center;
 }
 
     .inputs {
@@ -61,6 +61,7 @@
         font-size: 1rem;
         border: 1px solid #ccc;
         border-radius: 5px;
+		background-color: #61adff;
     }
 
     .input-pair .percentage {
@@ -121,14 +122,14 @@
 @media (max-width: 600px) {
     .input-pair {
         flex-direction: column;
-        align-items: center; /* Center-align items on smaller screens */
+        align-items: center;
     }
 
     .input-pair label,
     .input-pair input,
     .input-pair .percentage {
-        text-align: center; /* Ensure each input element is centered */
-        width: 100%; /* Make input fields responsive */
+        text-align: center;
+        width: 100%;
     }
 }
 </style>
@@ -147,19 +148,18 @@
         <div class="input-pair">
             <label for="input1" aria-label="Stick-Input für Schweben">Stick-Input the copter does hover:</label>
             <input type="number" id="input1" value="-28" aria-label="Eingabefeld für den Stick-Input bei Schweben">
-            <span id="convertedValue1" class="percentage">36,00%</span> <!-- Neues Element für den konvertierten Wert -->
+            <span id="convertedValue1" class="percentage">36,00%</span>
         </div>
         <div class="input-pair">
             <label for="input2" aria-label="Stick-Input für gewünschtes Schweben">Stick-Input the copter should hover:</label>
             <input type="number" id="input2" value="-50" aria-label="Eingabefeld für den gewünschten Stick-Input">
-            <span id="convertedValue2" class="percentage">25,00%</span> <!-- Neues Element für den konvertierten Wert -->
+            <span id="convertedValue2" class="percentage">25,00%</span>
         </div>
     </div>
 
     <div class="table-container">
         <h3>New throttle curve</h3>
         <table id="curveTable">
-            <!-- Der bestehende Tabellencode bleibt unverändert -->
             <tr>
                 <th>X</th>
                 <th>Y</th>
@@ -221,7 +221,6 @@
         const erster_wert = parseFloat(document.getElementById('input1').value);
         const zweiter_wert = parseFloat(document.getElementById('input2').value);
 
-        // Umrechnungsformel anwenden und Werte anzeigen
         const convertedValue1 = Math.round(((erster_wert + 100) / 200) * 10000) / 100;
         const convertedValue2 = Math.round(((zweiter_wert + 100) / 200) * 10000) / 100;
 
