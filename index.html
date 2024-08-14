@@ -9,36 +9,34 @@
             --primary-color: #007bff;
             --background-color: #f4f4f4;
             --text-color: #333;
-            --max-width: 400px;
+            --max-width: 450px;
         }
 
         body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0; /* Ändern Sie dies von 20px zu 0, um sicherzustellen, dass das Layout korrekt zentriert ist */
-    background-color: var(--background-color);
-    color: var(--text-color);
-}
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
 
-.container {
-    max-width: var(--max-width);
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    padding: 20px; /* Verschieben Sie das Padding hierhin, falls nötig */
-}
+        .container {
+            max-width: var(--max-width);
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
 
         .inputs {
-            display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
+            margin-bottom: 20px;
+            width: 100%;
         }
 
         .input-pair {
@@ -46,18 +44,21 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .input-pair label {
-            flex: 1;
             text-align: left;
-            font-size: 0.9rem;
+			width: 350px;
+			font-size: 0.9rem;
+            margin-right: 10px;
         }
 
         .input-pair input {
             text-align: right;
+			width: 70px;
             padding: 8px;
-            width: 67px;
             box-sizing: border-box;
             font-size: 1rem;
             border: 1px solid #ccc;
@@ -65,19 +66,15 @@
         }
 
         .input-pair .percentage {
-            width: 50px;
+            width: 55px;
             text-align: right;
             font-size: 1rem;
-            padding-left: 10px;
+            margin-left: 10px;
         }
 
         .table-container {
-            display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
+            margin-bottom: 20px;
+            width: 100%;
         }
 
         table {
@@ -123,24 +120,24 @@
         }
 
         @media (max-width: 600px) {
-    body {
-        padding: 0; /* Reduzieren Sie das Padding für kleine Bildschirme */
-    }
+            .input-pair {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-    .container {
-        padding: 10px; /* Reduzieren Sie das Padding in der Containerklasse */
-    }
+            .input-pair label,
+            .input-pair input,
+            .input-pair .percentage {
+                width: 100%;
+                text-align: left;
+                margin: 0;
+            }
 
-    .input-pair {
-        flex-direction: column;
-        align-items: center; /* Stellen Sie sicher, dass die Eingabepaar-Elemente zentriert sind */
-    }
-
-    .input-pair label, .input-pair input, .input-pair .percentage {
-        width: 100%;
-        text-align: center;
-    }
-}
+            .input-pair input,
+            .input-pair .percentage {
+                margin-top: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -150,19 +147,18 @@
         <div class="input-pair">
             <label for="input1" aria-label="Stick-Input für Schweben">Stick-Input the copter does hover:</label>
             <input type="number" id="input1" value="-28" aria-label="Eingabefeld für den Stick-Input bei Schweben">
-            <span id="convertedValue1" class="percentage">36,00%</span> <!-- Neues Element für den konvertierten Wert -->
+            <span id="convertedValue1" class="percentage">36,00%</span>
         </div>
         <div class="input-pair">
             <label for="input2" aria-label="Stick-Input für gewünschtes Schweben">Stick-Input the copter should hover:</label>
             <input type="number" id="input2" value="-50" aria-label="Eingabefeld für den gewünschten Stick-Input">
-            <span id="convertedValue2" class="percentage">25,00%</span> <!-- Neues Element für den konvertierten Wert -->
+            <span id="convertedValue2" class="percentage">25,00%</span>
         </div>
     </div>
 
     <div class="table-container">
         <h3>New throttle curve</h3>
         <table id="curveTable">
-            <!-- Der bestehende Tabellencode bleibt unverändert -->
             <tr>
                 <th>X</th>
                 <th>Y</th>
@@ -227,7 +223,6 @@
         const erster_wert = parseFloat(document.getElementById('input1').value);
         const zweiter_wert = parseFloat(document.getElementById('input2').value);
 
-        // Umrechnungsformel anwenden und Werte anzeigen
         const convertedValue1 = Math.round(((erster_wert + 100) / 200) * 10000) / 100;
         const convertedValue2 = Math.round(((zweiter_wert + 100) / 200) * 10000) / 100;
 
