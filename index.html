@@ -13,37 +13,38 @@
     }
 
     body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        padding: 20px;
-        background-color: var(--background-color);
-        color: var(--text-color);
-    }
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    text-align: center; /* Added to ensure text is centered */
+}
 
-    .container {
-        max-width: var(--max-width);
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-    }
+.container {
+    width: 100%; /* Ensure full use of the container width */
+    max-width: var(--max-width);
+    box-sizing: border-box;
+    text-align: center; /* Center the content */
+}
 
     .inputs {
         margin-bottom: 20px;
         width: 100%;
     }
 
-    .input-pair {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-        min-width: 0;
-    }
+.input-pair {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    min-width: 0;
+}
 
     .input-pair label {
         flex: 1;
@@ -117,26 +118,19 @@
         text-decoration: underline;
     }
 
-    @media (max-width: 600px) {
-        .input-pair {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .input-pair label {
-            margin-bottom: 5px;
-            text-align: left;
-        }
-
-        .input-pair input {
-            text-align: left;
-        }
-
-        .input-pair .percentage {
-            text-align: left;
-            padding-left: 0;
-        }
+@media (max-width: 600px) {
+    .input-pair {
+        flex-direction: column;
+        align-items: center; /* Center-align items on smaller screens */
     }
+
+    .input-pair label,
+    .input-pair input,
+    .input-pair .percentage {
+        text-align: center; /* Ensure each input element is centered */
+        width: 100%; /* Make input fields responsive */
+    }
+}
 </style>
 
 </head>
