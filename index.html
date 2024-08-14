@@ -221,59 +221,72 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    function updateCurve() {
-        const erster_wert = parseFloat(document.getElementById('input1').value);
-        const zweiter_wert = parseFloat(document.getElementById('input2').value);
 
-        const convertedValue1 = Math.round(((erster_wert + 100) / 200) * 10000) / 100;
-        const convertedValue2 = Math.round(((zweiter_wert + 100) / 200) * 10000) / 100;
+function updateCurve() {
+    const erster_wert = parseFloat(document.getElementById('input1').value);
+    const zweiter_wert = parseFloat(document.getElementById('input2').value);
 
-        document.getElementById('convertedValue1').textContent = convertedValue1.toFixed(2) + '%';
-        document.getElementById('convertedValue2').textContent = convertedValue2.toFixed(2) + '%';
+    const convertedValue1 = Math.round(((erster_wert + 100) / 200) * 10000) / 100;
+    const convertedValue2 = Math.round(((zweiter_wert + 100) / 200) * 10000) / 100;
 
-        let Y_Werte;
+    document.getElementById('convertedValue1').textContent = convertedValue1.toFixed(2) + '%';
+    document.getElementById('convertedValue2').textContent = convertedValue2.toFixed(2) + '%';
 
-        if (erster_wert === zweiter_wert) {
-            Y_Werte = [-100, -80, -60, -40, -20, 0, 20, 40, 60, 80, 100];
-        } else {
-            const Y2 = (((100 + erster_wert) / 200) + 1) * 1000;
-            const X2 = (100 + zweiter_wert) / 200;
+    let Y_Werte;
 
-            const Mttlpkt1X = (0 + X2) / 2;
-            const Mttlpkt1Y = (1000 + Y2) / 2;
-            const Mttlpkt2X = (X2 + 1) / 2;
-            const Mttlpkt2Y = (Y2 + 2000) / 2;
+    if (erster_wert === zweiter_wert) {
+        // Wenn beide Werte gleich sind, dann setze eine lineare Verteilung von -100 bis 100
+        Y_Werte = [-100, -80, -60, -40, -20, 0, 20, 40, 60, 80, 100];
+    } else {
+        const Y2 = (((100 + erster_wert) / 200) + 1) * 1000;
+        const X2 = (100 + zweiter_wert) / 200;
 
-            const StgngGrd1X = (Y2 - 1000) / (X2 - 0);
-            const StgngGrd1Y = (1 / StgngGrd1X) * -1;
-            const StgngGrd2X = (2000 - Y2) / (1 - X2);
-            const StgngGrd2Y = (1 / StgngGrd2X) * -1;
+        const Mttlpkt1X = (0 + X2) / 2;
+        const Mttlpkt1Y = (1000 + Y2) / 2;
+        const Mttlpkt2X = (X2 + 1) / 2;
+        const Mttlpkt2Y = (Y2 + 2000) / 2;
 
-            const MttlpktX = (Mttlpkt2Y - Mttlpkt1Y) / (StgngGrd1Y - StgngGrd2Y);
-            const MttlpktY = Mttlpkt1Y + StgngGrd1Y * (MttlpktX - Mttlpkt1X);
-            const Radius = Math.sqrt((0 - MttlpktX) ** 2 + (1000 - MttlpktY) ** 2);
+        const StgngGrd1X = (Y2 - 1000) / (X2 - 0);
+        const StgngGrd1Y = (1 / StgngGrd1X) * -1;
+        const StgngGrd2X = (2000 - Y2) / (1 - X2);
+        const StgngGrd2Y = (1 / StgngGrd2X) * -1;
 
-            const XWerte = [-100, -80, -60, -40, -20, 0, 20, 40, 60, 80, 100];
+        const MttlpktX = (Mttlpkt2Y - Mttlpkt1Y) / (StgngGrd1Y - StgngGrd2Y);
+        const MttlpktY = Mttlpkt1Y + StgngGrd1Y * (MttlpktX - Mttlpkt1X);
+        const Radius = Math.sqrt((0 - MttlpktX) ** 2 + (1000 - MttlpktY) ** 2);
 
-            Y_Werte = XWerte.map(X => {
-                if (erster_wert < zweiter_wert) {
-                    return Math.round((((MttlpktY - Math.sqrt(Radius**2 - (((X + 100) / 200) - MttlpktX)**2)) / 1000) - 1) * 200 - 100);
-                } else {
-                    return Math.round((((Math.sqrt(Radius**2 - (((X + 100) / 200) - MttlpktX)**2) + MttlpktY) / 1000) - 1) * 200 - 100);
-                }
-            });
-        }
+        const XWerte = [-100, -80, -60, -40, -20, 0, 20, 40, 60, 80, 100];
 
-        Y_Werte.forEach((Y, index) => {
-            document.getElementById(`Y${index + 1}`).textContent = Y;
+        Y_Werte = XWerte.map((X, index, array) => {
+            let Y;
+            if (erster_wert < zweiter_wert) {
+                Y = Math.round((((MttlpktY - Math.sqrt(Radius**2 - (((X + 100) / 200) - MttlpktX)**2)) / 1000) - 1) * 200 - 100);
+            } else {
+                Y = Math.round((((Math.sqrt(Radius**2 - (((X + 100) / 200) - MttlpktX)**2) + MttlpktY) / 1000) - 1) * 200 - 100);
+            }
+            // Skalieren der Y-Werte auf das Intervall [-100, 100]
+            const minY = Math.min(...array);
+            const maxY = Math.max(...array);
+            const scaledY = ((Y - minY) / (maxY - minY)) * (100 - (-100)) + (-100);
+            return Math.round(scaledY);
         });
-
-        curveChart.data.datasets[0].data = Y_Werte;
-        curveChart.update();
     }
 
-    document.getElementById('input1').addEventListener('input', updateCurve);
-    document.getElementById('input2').addEventListener('input', updateCurve);
+    // Setze den ersten und letzten Y-Wert fest
+    Y_Werte[0] = -100;
+    Y_Werte[Y_Werte.length - 1] = 100;
+
+    Y_Werte.forEach((Y, index) => {
+        document.getElementById(`Y${index + 1}`).textContent = Y;
+    });
+
+    curveChart.data.datasets[0].data = Y_Werte;
+    curveChart.update();
+}
+
+document.getElementById('input1').addEventListener('input', updateCurve);
+document.getElementById('input2').addEventListener('input', updateCurve);
+
 
     const ctx = document.getElementById('curveChart').getContext('2d');
     const curveChart = new Chart(ctx, {
